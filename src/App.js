@@ -1,10 +1,12 @@
 
-
+import React from "react";
+import NavBar from "./components/navbar/navbar";
+import './App.css'
 
 function App() {
   return (
-    <div >
-     <h1>hai</h1>
+    <div  >
+     <NavBar/>
     </div>
   );
 }
