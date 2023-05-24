@@ -1,16 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Banner.css"
+import axios from '../../axios'
+import { api_Key, img_Url } from '../../constants/constants'
 
 export default function Banner() {
+  const [movie,setMovie] =useState()
+  useEffect(()=>{
+    axios.get(`trending/all/week?api_key=${api_Key}&language=en-US`).then((response)=>{
+      console.log(response.data.results[0]);
+      setMovie(response.data.results[3])
+    })
+  },[])
   return (
-    <div className='banner'>
+    <div className='banner' style={{backgroundImage: `url(${movie ? img_Url+movie.backdrop_path :""})`}}>
       <div className="content">
-        <h1 className="title">Movie Name</h1>
+        <h1 className="title">{movie ? movie.title :"hai"}</h1>
         <div className="bannerBtns">
             <button className='button'>Play</button>
             <button className='button'>My List</button>
         </div>
-        <h1 className='description'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h1>
+        <h1 className='description'>{movie ? movie.overview :"hai"}</h1>
       </div>
       <div className="fadeBottom"></div>
     </div>
